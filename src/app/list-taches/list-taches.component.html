@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        Liste des tâches
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="add">
+        <mat-card>
+            <mat-toolbar color="blue">Ajouter une tâche</mat-toolbar>
+            <form (ngSubmit)="onSubmit()" [formGroup]="tacheForm">
+                <mat-form-field>
+                    <div class="form-group">
+                        <input matInput placeholder="description" type="text" class="form-control" id="description"
+                            [(ngModel)]="tache.description" formControlName="description">
+                    </div>
+                </mat-form-field>
+                <td>
+                    <button mat-button color="primary"  mat-raised-button type="submit">
+                      <mat-icon> add</mat-icon>
+                    </button>
+            </form>
+        </mat-card>
+    </div>
+
+    <div class="empty" *ngIf="list.length === 0">
+        <p>Pas de tâches disponibles !</p>
+    </div>
+
+    <div class="table" *ngIf="list.length > 0">
+        <mat-toolbar color="blue" style="width: 240px;margin-left: 450px;">Liste des tâches</mat-toolbar>
+        <table class="table table-bordered border-primary" style="width: 800px;">
+            <thead>
+                <tr>
+                    <th >Id</th>
+                    <th >Description</th>
+                    <th >Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let t of list">
+                    <td>{{t.id}}</td>
+                    <td>{{t.description}}</td>
+                    <td>
+                        <button mat-icon-button color="primary" (click)="getTacheId(t.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" (click)="delete(t.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary"(click)="tacheDetails(t.id)" >
+                            <mat-icon>list_alt</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+    <div class="update" *ngIf="id">
+        <mat-card>
+            <mat-toolbar color="blue">Modifier une tâche</mat-toolbar>
+            <form (ngSubmit)="onUpdate(updateTacheForm)" #updateTacheForm="ngForm">
+                <mat-form-field>
+                    <div class="form-group">
+                        <input matInput placeholder="description" type="text" class="form-control" id="description"
+                            [(ngModel)]="t_update.description" name="description">
+                    </div>
+                </mat-form-field>
+                <td>
+                    <button mat-button color="primary"  mat-raised-button type="submit">
+                      <mat-icon> add</mat-icon>
+                    </button>
+            </form>
+        </mat-card>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
